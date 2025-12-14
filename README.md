@@ -30,30 +30,28 @@ Key fields include:
 
 ## Week 4 Tasks
 
-
-1. ## Exploratory Data Analysis (EDA)
+1.  **Exploratory Data Analysis (EDA)**
 
    - The EDA phase focuses on understanding customer transaction behavior and preparing the data for proxy-based credit risk modeling. We examine the structure and quality of the dataset, explore numerical and categorical feature patterns, analyze transaction distributions, check for missing values and outliers, and study correlations to identify meaningful predictors.
 
-2. ## Exploratory Data Analysis (EDA)
- **Proxy Variable Creation**  
+2. **Proxy Variable Creation**  
    - Define a proxy variable to label customers as **high risk** (bad) or **low risk** (good) based on RFM behavior patterns.
 
-1. **Feature Engineering**  
+3. **Feature Engineering**  
    - Select observable features highly correlated with default behavior.
    - Transform raw data into predictive inputs for modeling.
 
-2. **Model Development**  
+4. **Model Development**  
    - Train **classification models** (e.g., Logistic Regression, XGBoost) to predict credit risk probability.
    - Train **regression/severity models** to estimate potential loss amounts.
 
-3. **Credit Scoring**  
+5. **Credit Scoring**  
    - Convert risk probabilities into **credit scores** for loan eligibility decisions.
 
-4. **Loan Recommendation**  
+6. **Loan Recommendation**  
    - Predict **optimal loan amount and duration** based on customer risk and historical patterns.
 
-5. **Model Evaluation & Interpretability**  
+7. **Model Evaluation & Interpretability**  
    - Evaluate using Accuracy, Precision, Recall, F1-score, ROC-AUC, RMSE, MAE, R².
    - Use **SHAP / LIME** for feature importance and explainable predictions.
 
