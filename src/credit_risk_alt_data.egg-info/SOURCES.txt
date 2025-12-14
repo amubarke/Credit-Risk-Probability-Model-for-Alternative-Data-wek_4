@@ -1,9 +1,0 @@
-README.md
-pyproject.toml
-src/api/main.py
-src/api/pydantic_models.py
-src/credit_risk_alt_data.egg-info/PKG-INFO
-src/credit_risk_alt_data.egg-info/SOURCES.txt
-src/credit_risk_alt_data.egg-info/dependency_links.txt
-src/credit_risk_alt_data.egg-info/top_level.txt
-tests/test_data_processing.py
