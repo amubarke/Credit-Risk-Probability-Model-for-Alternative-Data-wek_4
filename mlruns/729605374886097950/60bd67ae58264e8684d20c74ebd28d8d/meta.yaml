@@ -1,0 +1,14 @@
+artifact_uri: file:///e:\Credit-Risk-Probability-Model-for-Alternative-Data-wek_4/mlruns/729605374886097950/60bd67ae58264e8684d20c74ebd28d8d/artifacts
+end_time: 1766177026958
+entry_point_name: ''
+experiment_id: '729605374886097950'
+lifecycle_stage: active
+run_id: 60bd67ae58264e8684d20c74ebd28d8d
+run_name: XGBoost
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766177022958
+status: 3
+tags: []
+user_id: Abas
