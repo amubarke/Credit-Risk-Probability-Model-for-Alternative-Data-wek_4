@@ -1,0 +1,10 @@
+artifact_location: file:///e:\Credit-Risk-Probability-Model-for-Alternative-Data-wek_4/mlruns/729605374886097950/models/m-a26d0c0e4793481cab3ac4ccce3fc076/artifacts
+creation_timestamp: 1766177016043
+experiment_id: '729605374886097950'
+last_updated_timestamp: 1766177022928
+model_id: m-a26d0c0e4793481cab3ac4ccce3fc076
+model_type: null
+name: RandomForest
+source_run_id: 5868eaa2e8d046188242d5279a43dc46
+status: 2
+status_message: null

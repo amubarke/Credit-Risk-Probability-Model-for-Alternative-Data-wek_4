@@ -1,0 +1,10 @@
+artifact_location: file:///e:\Credit-Risk-Probability-Model-for-Alternative-Data-wek_4/mlruns/729605374886097950/models/m-ce900d0aa2614215b7413162ebb84143/artifacts
+creation_timestamp: 1766177023171
+experiment_id: '729605374886097950'
+last_updated_timestamp: 1766177026940
+model_id: m-ce900d0aa2614215b7413162ebb84143
+model_type: null
+name: XGBoost
+source_run_id: 60bd67ae58264e8684d20c74ebd28d8d
+status: 2
+status_message: null
