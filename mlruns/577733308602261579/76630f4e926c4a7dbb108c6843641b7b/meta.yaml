@@ -1,0 +1,14 @@
+artifact_uri: file:///e:\Credit-Risk-Probability-Model-for-Alternative-Data-wek_4/mlruns/577733308602261579/76630f4e926c4a7dbb108c6843641b7b/artifacts
+end_time: 1766146831199
+entry_point_name: ''
+experiment_id: '577733308602261579'
+lifecycle_stage: active
+run_id: 76630f4e926c4a7dbb108c6843641b7b
+run_name: RandomForest
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1766146819446
+status: 3
+tags: []
+user_id: Abas
