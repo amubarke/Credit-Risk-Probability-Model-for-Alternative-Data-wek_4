@@ -1,7 +1,6 @@
-# End-to-End Data Processing Pipeline (Steps 1–6)
-# Author: Machine Learning Engineer
-# Purpose: Transform raw transaction data into model-ready format using sklearn.pipeline.Pipeline
-
+# --------------------------------------------------
+# End-to-End Data Processing Pipeline
+# --------------------------------------------------
 import pandas as pd
 import numpy as np
 
@@ -9,8 +8,6 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler
 from sklearn.impute import SimpleImputer
-
-# WoE / IV
 from xverse.transformer import WOE
 
 
@@ -27,14 +24,12 @@ class AggregateFeatures(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         df = X.copy()
-
         agg_df = df.groupby(self.customer_col)[self.amount_col].agg([
             ("total_transaction_amount", "sum"),
             ("avg_transaction_amount", "mean"),
             ("transaction_count", "count"),
             ("std_transaction_amount", "std")
         ]).reset_index()
-
         df = df.merge(agg_df, on=self.customer_col, how="left")
         return df
 
@@ -52,39 +47,15 @@ class DateTimeFeatures(BaseEstimator, TransformerMixin):
     def transform(self, X):
         df = X.copy()
         df[self.datetime_col] = pd.to_datetime(df[self.datetime_col])
-
         df["transaction_hour"] = df[self.datetime_col].dt.hour
         df["transaction_day"] = df[self.datetime_col].dt.day
         df["transaction_month"] = df[self.datetime_col].dt.month
         df["transaction_year"] = df[self.datetime_col].dt.year
-
         return df
 
 
 # --------------------------------------------------
-# 3. LABEL ENCODING FOR CATEGORICAL FEATURES
-# --------------------------------------------------
-class CategoricalEncoder(BaseEstimator, TransformerMixin):
-    def __init__(self, categorical_cols):
-        self.categorical_cols = categorical_cols
-        self.encoders = {}
-
-    def fit(self, X, y=None):
-        for col in self.categorical_cols:
-            le = LabelEncoder()
-            le.fit(X[col].astype(str))
-            self.encoders[col] = le
-        return self
-
-    def transform(self, X):
-        df = X.copy()
-        for col, le in self.encoders.items():
-            df[col] = le.transform(df[col].astype(str))
-        return df
-
-
-# --------------------------------------------------
-# 4. MISSING VALUE HANDLING
+# 3. MISSING VALUE HANDLING
 # --------------------------------------------------
 class MissingValueHandler(BaseEstimator, TransformerMixin):
     def __init__(self, numeric_cols, categorical_cols):
@@ -102,6 +73,28 @@ class MissingValueHandler(BaseEstimator, TransformerMixin):
         df = X.copy()
         df[self.numeric_cols] = self.num_imputer.transform(df[self.numeric_cols])
         df[self.categorical_cols] = self.cat_imputer.transform(df[self.categorical_cols])
+        return df
+
+
+# --------------------------------------------------
+# 4. LABEL ENCODING FOR CATEGORICAL FEATURES
+# --------------------------------------------------
+class CategoricalEncoder(BaseEstimator, TransformerMixin):
+    def __init__(self, categorical_cols):
+        self.categorical_cols = categorical_cols
+        self.encoders = {}
+
+    def fit(self, X, y=None):
+        for col in self.categorical_cols:
+            le = LabelEncoder()
+            le.fit(X[col].astype(str))
+            self.encoders[col] = le
+        return self
+
+    def transform(self, X):
+        df = X.copy()
+        for col, le in self.encoders.items():
+            df[col] = le.transform(df[col].astype(str))
         return df
 
 
@@ -126,7 +119,7 @@ class FeatureScaler(BaseEstimator, TransformerMixin):
 
 
 # --------------------------------------------------
-# 6. WEIGHT OF EVIDENCE (WoE) TRANSFORMATION
+# 6. WEIGHT OF EVIDENCE TRANSFORMATION
 # --------------------------------------------------
 class WoETransformer(BaseEstimator, TransformerMixin):
     def __init__(self, target_col="FraudResult"):
@@ -142,18 +135,34 @@ class WoETransformer(BaseEstimator, TransformerMixin):
 
 
 # --------------------------------------------------
-# FULL PIPELINE
+# FULL PIPELINE BUILDER
 # --------------------------------------------------
-def build_pipeline(categorical_cols, numeric_cols, scaling_method="standard"):
+# --------------------------------------------------
+# FULL PIPELINE (Updated: Encode categorical BEFORE WoE)
+# --------------------------------------------------
+def build_pipeline(categorical_cols, numeric_cols, target_col="FraudResult", scaling_method="standard"):
+    """
+    Build a full data processing pipeline:
+    1. Aggregate numeric features per customer
+    2. Extract datetime features
+    3. Handle missing values
+    4. Encode categorical features (before WoE)
+    5. Scale numeric features
+    6. Apply WoE transformation
+
+    Args:
+        categorical_cols (list): List of categorical columns to encode
+        numeric_cols (list): List of numeric columns to scale
+        target_col (str): Target column for supervised transformation (WoE)
+        scaling_method (str): 'standard' for StandardScaler or 'normalize' for MinMaxScaler
+    """
     pipeline = Pipeline(steps=[
         ("aggregate_features", AggregateFeatures()),
         ("datetime_features", DateTimeFeatures()),
         ("missing_values", MissingValueHandler(numeric_cols, categorical_cols)),
-        ("categorical_encoding", CategoricalEncoder(categorical_cols)),
+        ("categorical_encoding", CategoricalEncoder(categorical_cols)),  # <--- encode BEFORE WoE
         ("scaling", FeatureScaler(numeric_cols, method=scaling_method)),
-        ("woe", WoETransformer())
+        ("woe", WoETransformer(target_col=target_col))
     ])
     return pipeline
-
-
 
