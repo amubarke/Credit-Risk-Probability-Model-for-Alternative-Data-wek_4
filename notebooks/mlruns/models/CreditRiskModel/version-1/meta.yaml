@@ -1,0 +1,15 @@
+creation_timestamp: 1766097262561
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1766097262561
+model_id: m-c9babcd1a2864681ac1d35eed35402a1
+name: CreditRiskModel
+run_id: aa64f2d3089f49e89e9e43ba8d707c27
+run_link: null
+source: models:/m-c9babcd1a2864681ac1d35eed35402a1
+status: READY
+status_message: null
+storage_location: file:///e:/Credit-Risk-Probability-Model-for-Alternative-Data-wek_4/notebooks/mlruns/494904809433481285/models/m-c9babcd1a2864681ac1d35eed35402a1/artifacts
+user_id: null
+version: 1
